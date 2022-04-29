@@ -3,13 +3,13 @@ Import-Module activedirectory
 cd Desktop
 $ADUsers = Import-csv .\GrandSlam.csv
 
-if (Test-Path .\GrandSlam.csv == true) { exit }
+if (Test-Path .\GrandSlam.csv) { exit }
 
 foreach ($User in $ADUsers)
 {
  $Username = $User.SamAccountName
  $Password = $User.password
- $Path1 = $User.path
+ $Path = $User.path
  $GivenName = $User.GivenName
  $Surname = $User.Surname
  $Initials = $User.Initials
@@ -19,11 +19,11 @@ foreach ($User in $ADUsers)
  $Department = $User.Department
  $Email = $User.EmailAddress
  $Title = $User.Title
- $groups = $User.groups -split ";"
+
  
  if(Get-ADUser -F {SamAccountName -eq $Username})
  {
- Write-Host Warning
+ Write-Host Warning, User already exists
  }
  else
 {
@@ -36,8 +36,8 @@ foreach ($User in $ADUsers)
             -Enabled $True `
             -DisplayName "$Firstname $Lastname" `
             -EmailAddress "$Username@gmail.com" `
-            -AccountPassword (convertto-securestring $Password -AsPlainText -Force) `
-            -PasswordNeverExpires $True
+            -AccountPassword (convertto-securestring $Password -AsPlainText -Force) -ChangePasswordAtLogon 1 `
+            -PasswordNeverExpires $True `
             -Department = $User.Department
             
             foreach($group in $groups){Add-ADGroupMember $group -Members $Username}
