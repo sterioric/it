@@ -37,7 +37,7 @@ foreach ($User in $ADUsers)
             -EmailAddress "$Username@gmail.com" `
             -AccountPassword (convertto-securestring $Password -AsPlainText -Force) -ChangePasswordAtLogon 1 `
             -PasswordNeverExpires $True `
-            -Department = $User.Department
+            -Department = $Department
             
             Add-ADGroupMember $Path -Members $Username
             
