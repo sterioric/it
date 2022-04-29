@@ -41,5 +41,5 @@ foreach ($User in $ADUsers)
             
             Add-ADGroupMember $Path -Members $Username
             
-            Write-Ouput "$Username added to AD" -ForegroundColor Cyan
+            Write-Host "$Username added to AD" -ForegroundColor Cyan
  }
