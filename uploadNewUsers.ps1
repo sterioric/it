@@ -1,6 +1,5 @@
 Import-Module activedirectory
 
-cd Desktop
 $ADUsers = Import-csv .\GrandSlam.csv
 
 if (Test-Path .\GrandSlam.csv) { exit }
