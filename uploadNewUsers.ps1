@@ -40,7 +40,7 @@ foreach ($User in $ADUsers)
             -PasswordNeverExpires $True `
             -Department = $User.Department
             
-            foreach($group in $groups){Add-ADGroupMember $group -Members $Username}
+            Add-ADGroupMember $Path -Members $Username
             
             Write-Ouput "$Username added to AD" -ForegroundColor Cyan
  }
